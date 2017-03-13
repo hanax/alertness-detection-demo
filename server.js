@@ -47,8 +47,7 @@ imURLRef.on('value', function(snapshot) {
   visionClient.detectFaces(storage.bucket('symbiote-demo.appspot.com').file('curImg'))
     .then((results) => {
       const face = results[0][0];
-
-      console.log('Emotions:');
+      console.log(`Emotions: (confidence $(face.confidence))`);
       console.log(`    Joy: ${face.joy}`);
       console.log(`    Anger: ${face.anger}`);
       console.log(`    Sorrow: ${face.sorrow}`);
