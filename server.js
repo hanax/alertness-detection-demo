@@ -57,6 +57,11 @@ imURLRef.on('value', function(snapshot) {
         console.log('Heart rate:');
         console.log(snapshot.val().curBeat);
       });
+
+      firebase.database().ref('ad/').once('value').then((snapshot) => {
+        console.log('Audio emotion:');
+        console.log(snapshot.val().audioEmotion);
+      });
     })
     .catch((err) => {
       console.log(err);

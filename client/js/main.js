@@ -9,12 +9,29 @@ const config = {
 
 firebase.initializeApp(config);
 
+let mic;
+
+function setup() {
+  mic = new p5.AudioIn();
+  mic.start();
+  frameRate(500);
+}
+
+function draw() {
+  const vol = mic.getLevel(); // 0-1.0
+  if (vol > 0.15) {
+    firebase.database().ref('ad/').set({ audioEmotion: 'upbeat' });
+  } else {
+    firebase.database().ref('ad/').set({ audioEmotion: 'down' });
+  }
+}
+
 $(() => {
   const video = document.getElementById('video');
   if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
-          video.src = window.URL.createObjectURL(stream);
-          video.play();
+        video.src = window.URL.createObjectURL(stream);
+        video.play();
       });
   }
 
