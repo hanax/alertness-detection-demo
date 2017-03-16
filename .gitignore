@@ -4,4 +4,4 @@ node_modules/
 .DS_Store
 google-cloud-sdk/
 get_pulse.app
-
+*-key.json

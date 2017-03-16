@@ -19,10 +19,12 @@ function setup() {
 
 function draw() {
   const vol = mic.getLevel(); // 0-1.0
-  if (vol > 0.15) {
-    firebase.database().ref('ad/').set({ audioEmotion: 'upbeat' });
+  if (vol > 0.1) {
+    firebase.database().ref('ad/').set({ audioEmotion: 'happy' });
+  } else if (vol > 0.05){
+    firebase.database().ref('ad/').set({ audioEmotion: 'sad' });
   } else {
-    firebase.database().ref('ad/').set({ audioEmotion: 'down' });
+    firebase.database().ref('ad/').set({ audioEmotion: 'neutual' });
   }
 }
 
@@ -41,7 +43,7 @@ $(() => {
   setInterval(() => {
     canvas.getContext('2d').drawImage(video, 0, 0, 640, 480);
     uploadToFbStorage(dataURItoBlob(canvas.toDataURL()));
-  }, 5000);
+  }, 2000);
 });
 
 const uploadToFbStorage = (file) => {

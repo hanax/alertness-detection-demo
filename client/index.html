@@ -1,10 +1,7 @@
 <head>
 <title> Symbiote </title>
 
-<style>
-  body { margin: 0; }
-  canvas { display: none; }
-</style>
+<link rel="stylesheet" type="text/css" href="style/style.css" />
 
 <script
   src="https://code.jquery.com/jquery-3.1.1.min.js"
@@ -13,11 +10,40 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.7/p5.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.7/addons/p5.sound.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase.js"></script>
+<script src="https://use.fontawesome.com/9d6ff586b5.js"></script>
+<script type="text/javascript" src="js/particles.min.js"></script>
+<script type="text/javascript" src="js/siriwave.js"></script>
+<script type="text/javascript" src="js/dashboard.js"></script>
 <script type="text/javascript" src="js/main.js"></script>
 </head>
 
 <body>
-<video id="video" width="640" height="480" autoplay></video>
-<canvas id="canvas" width="640" height="480"></canvas>
+<div id="heartbeat" class="dash-block text--neutural">
+  <span class="fa fa-heartbeat"> </span>
+  <span class="dash-number"> </span>
+</div>
+
+<div id="alertness" class="dash-block">
+  <span class="fa fa-eye" id="alert-true"> </span>
+  <span class="fa fa-exclamation-triangle" id="alert-false"> </span>
+  <span class="dash-number"> </span>
+</div>
+
+<div id="emotion" class="dash-block">
+  <span class="fa fa-smile-o" id="em-happy"> </span>
+  <span class="fa fa-frown-o" id="em-sad"> </span>
+  <span class="fa fa-meh-o" id="em-neutural"> </span>
+  <span class="dash-number"> </span>
+</div>
+
+<div id="siri-container" class="siri-container"></div>
+
+<div class="hidden-video-canvas">
+  <video id="video" width="640" height="480" autoplay></video>
+  <canvas id="canvas" width="640" height="480"></canvas>
+</div>
+
+<div id="particles-js" class="bg-particles"></div>
+
 </body>
 </html>

@@ -1,9 +1,11 @@
 Hacky webapp to detect heartrate with a camera
 
 ```
-# 1. start client server
+# 1. start client server and open the page
 # 2. auth gcloud
 gcloud auth application-default login
 # 3. start pulse app and start udp server
 npm start
+# 4. hit S on the pulse app and wait for the heartbeat to stablize
+# 5. get results from node console
 ```

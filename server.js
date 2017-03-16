@@ -37,30 +37,56 @@ server.bind(5050, '127.0.0.1');
 
 const Vision = require('@google-cloud/vision');
 const Storage = require('@google-cloud/storage');
+
 const storage = Storage();
-const visionClient = Vision();
+
+const visionClient = Vision({
+  keyFilename: './symbiote-demo-key.json',
+  projectId: 'symbiote-demo'
+});
 
 const imURLRef = firebase.database().ref('im/');
 imURLRef.on('value', function(snapshot) {
-  // const imURL = snapshot.val().imURL;
-
   visionClient.detectFaces(storage.bucket('symbiote-demo.appspot.com').file('curImg'))
     .then((results) => {
+      console.log(`---------`);
+
       const face = results[0][0];
-      console.log(`Emotions: (confidence $(face.confidence))`);
+      console.log(`Emotions: (confidence ${face.confidence})`);
       console.log(`    Joy: ${face.joy}`);
       console.log(`    Anger: ${face.anger}`);
       console.log(`    Sorrow: ${face.sorrow}`);
       console.log(`    Surprise: ${face.surprise}`);
-
-      firebase.database().ref('hb/').once('value').then((snapshot) => {
-        console.log('Heart rate:');
-        console.log(snapshot.val().curBeat);
-      });
+      firebase.database().ref('em/').set({ face });
 
       firebase.database().ref('ad/').once('value').then((snapshot) => {
         console.log('Audio emotion:');
-        console.log(snapshot.val().audioEmotion);
+        console.log(`    ${snapshot.val().audioEmotion}`);
+      });
+
+      let sleepFlg = false;
+      console.log(`Head Angle:`);
+
+      const tilt = face.angles.tilt;
+      console.log(`    Tilt: ${tilt}`);
+      // tilt < -5 means falling asleep
+      if (tilt < -5) sleepFlg |= true;
+
+      firebase.database().ref('hb/').once('value').then((snapshot) => {
+        console.log('Heart rate:');
+        const curBeat = snapshot.val().curBeat;
+        console.log(`    ${curBeat}`);
+        // beat < 50 means falling asleep
+        if (curBeat < 50) sleepFlg |= true;
+
+        console.log(`** Alert?: ${sleepFlg ? 'NO' : 'YES'} **`);
+
+        let level = tilt - (-5) * (50 / curBeat)
+        if (sleepFlg && level > 0) level = -1 * level;
+        firebase.database().ref('al/').set({
+          isAlert: !sleepFlg,
+          level
+        });
       });
     })
     .catch((err) => {

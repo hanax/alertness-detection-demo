@@ -1,0 +1,57 @@
+body {
+  font-family: 'Avenir';
+  margin: 0; 
+  background: #000;
+}
+
+.hidden-video-canvas {
+  position: fixed;
+  opacity: 0;
+}
+
+.siri-container {
+  width: 100vw;
+  height: 200px;
+}
+
+.fa {
+  width: 80px;
+}
+
+.dash-block {
+  float: left;
+  width: 45%;
+  height: 200px;
+  color: #fff;
+  line-height: 200px;
+  font-size: 80px;
+  overflow: hidden;
+  animation: pulsate linear 1.5s infinite;
+  padding-left: 5%;
+  transition: all .3s;
+}
+
+@keyframes pulsate {
+  0%, 100%   {opacity: 1;}
+  50%  {opacity: 0.6;}
+}
+
+.text--neutural {
+  color: #95C7D7;
+}
+
+.text--urgent {
+  color: #F38E9E;
+}
+
+.text--safe {
+  color: #82F4B8;
+}
+
+.bg-particles {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
