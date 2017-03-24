@@ -2,7 +2,10 @@ particlesJS.load('particles-js', 'js/particles.json', function() {
   console.log('callback - particles.js config loaded');
 });
 
+let alertCntdown = 0;
+
 $(() => {
+  firebase.database().ref('sl/').set({ shouldSlowDown: false });
   const siriWave = new SiriWave({
     container: document.getElementById('siri-container'),
     style: 'ios9',
@@ -57,6 +60,27 @@ $(() => {
       $('#alertness').addClass('text--urgent');
       $('#alert-false').show();
       $('#alert-true').hide();
+    }
+
+    if (!isAlert && alertCntdown === 0) {
+      alertCntdown = Date.now();
+      document.getElementById('alarm-sound').play();
+    } else if (!isAlert) {
+      // more than 10 sec
+      if (Date.now() - alertCntdown > 10000) {
+        firebase.database().ref('sl/').set({ shouldSlowDown: true });
+      }
+    } else {
+      document.getElementById('alarm-sound').pause();
+      alertCntdown = 0;
+    }
+  });
+
+  $(document).on('keydown', (e) => {
+    // hit space
+    if (e.which === 32) {
+      alertCntdown = 0;
+      document.getElementById('alarm-sound').pause();
     }
   });
 });
