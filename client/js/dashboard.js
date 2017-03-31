@@ -5,7 +5,7 @@ particlesJS.load('particles-js', 'js/particles.json', function() {
 let alertCntdown = 0;
 
 $(() => {
-  firebase.database().ref('sl/').set({ shouldSlowDown: false });
+  firebase.database().ref('sl/').set({ shouldSlowDown: false, shouldSpeedUpZCT: false });
   const siriWave = new SiriWave({
     container: document.getElementById('siri-container'),
     style: 'ios9',
@@ -57,7 +57,7 @@ $(() => {
       $('#alert-true').show();
 
       document.getElementById('alarm-sound').pause();
-      firebase.database().ref('sl/').set({ shouldSlowDown: false });
+      firebase.database().ref('sl/').update({ shouldSlowDown: false });
       alertCntdown = 0;
     } else {
       $('#alertness').removeClass('text--safe');
@@ -70,7 +70,7 @@ $(() => {
         document.getElementById('alarm-sound').play();
       } else if (Date.now() - alertCntdown > 10000) {
         // more than 10 sec
-        firebase.database().ref('sl/').set({ shouldSlowDown: true });
+        firebase.database().ref('sl/').update({ shouldSlowDown: true });
       }
     }
   });
@@ -85,6 +85,10 @@ $(() => {
     if (e.which === 32) {
       alertCntdown = 0;
       document.getElementById('alarm-sound').pause();
+    }
+    // hit a
+    if (e.which === 65) {
+      firebase.database().ref('sl/').update({ shouldSpeedUpZCT: true });
     }
   });
 });

@@ -43,7 +43,7 @@ $(() => {
   setInterval(() => {
     canvas.getContext('2d').drawImage(video, 0, 0, 640, 480);
     uploadToFbStorage(dataURItoBlob(canvas.toDataURL()));
-  }, 2000);
+  }, 1000);
 });
 
 const uploadToFbStorage = (file) => {

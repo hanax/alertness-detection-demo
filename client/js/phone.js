@@ -9,11 +9,11 @@ const config = {
 
 firebase.initializeApp(config);
 
-var curSpeed = 80;
+var curSpeed = 65;
 var curAcc = 0;
 
 $(() => {
-  firebase.database().ref('sl/').set({ shouldSlowDown: false });
+  firebase.database().ref('sl/').set({ shouldSlowDown: false, shouldSpeedUpZCT: false });
 
   setInterval(() => {
     if (curAcc < 0) {
@@ -22,17 +22,29 @@ $(() => {
       $('body').removeClass('body--alert');
     }
     curSpeed += curAcc;
-    curSpeed = Math.min(80, Math.max(0, curSpeed));
+    if (curAcc === 2) {
+      // recover mode
+      curSpeed = Math.min(65, Math.max(0, curSpeed));
+    } else if (curAcc === 1) {
+      // zct speed up mode
+      curSpeed = Math.min(80, Math.max(0, curSpeed));
+    }
+
     $('#speed').text(curSpeed);
   }, 800);
 
   firebase.database().ref('sl/').on('value', (snapshot) => {
-    const shouldSlowDown = snapshot.val().shouldSlowDown;
-    console.log(shouldSlowDown)
+    const { shouldSlowDown, shouldSpeedUpZCT } = snapshot.val();
+    if (shouldSpeedUpZCT) {
+      curAcc = 1;
+      $('#speed-ic').show();
+      return;
+    }
+
     if (shouldSlowDown) {
       curAcc = -2;
     } else {
-      if (curSpeed < 80) {
+      if (curSpeed < 65) {
         curAcc = 2;
       } else {
         curAcc = 0;
