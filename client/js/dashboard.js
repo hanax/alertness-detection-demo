@@ -89,6 +89,7 @@ $(() => {
     // hit a
     if (e.which === 65) {
       firebase.database().ref('sl/').update({ shouldSpeedUpZCT: true });
+      document.getElementById('alarm-zct').play();
     }
   });
 });
