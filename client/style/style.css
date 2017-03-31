@@ -2,6 +2,11 @@ body {
   font-family: 'Avenir';
   margin: 0; 
   background: #000;
+  transition: all .3s;
+}
+
+.body--alert {
+  background-color: #732323;
 }
 
 .hidden-video-canvas {
@@ -58,4 +63,20 @@ audio {
   position: fixed;
   top: 0;
   left: 0;
+}
+
+.speed {
+  position: fixed;
+  width: 100vw;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+  font-size: 300px;
+  color: #fff;
+  animation: pulsate-phone linear 2s infinite;
+}
+
+@keyframes pulsate-phone {
+  0%, 100%   {opacity: 1; font-size: 300px;}
+  50%  {opacity: 0.4; font-size: 330px;}
 }

@@ -55,26 +55,30 @@ $(() => {
       $('#alertness').addClass('text--safe');
       $('#alert-false').hide();
       $('#alert-true').show();
+
+      document.getElementById('alarm-sound').pause();
+      firebase.database().ref('sl/').set({ shouldSlowDown: false });
+      alertCntdown = 0;
     } else {
       $('#alertness').removeClass('text--safe');
       $('#alertness').addClass('text--urgent');
       $('#alert-false').show();
       $('#alert-true').hide();
-    }
 
-    if (!isAlert && alertCntdown === 0) {
-      alertCntdown = Date.now();
-      document.getElementById('alarm-sound').play();
-    } else if (!isAlert) {
-      // more than 10 sec
-      if (Date.now() - alertCntdown > 10000) {
+      if (alertCntdown === 0) {
+        alertCntdown = Date.now();
+        document.getElementById('alarm-sound').play();
+      } else if (Date.now() - alertCntdown > 10000) {
+        // more than 10 sec
         firebase.database().ref('sl/').set({ shouldSlowDown: true });
       }
-    } else {
-      document.getElementById('alarm-sound').pause();
-      alertCntdown = 0;
     }
   });
+
+  document.getElementById('alarm-sound').addEventListener('ended', function() {
+    this.currentTime = 0;
+    this.play();
+  }, false);
 
   $(document).on('keydown', (e) => {
     // hit space
