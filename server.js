@@ -52,6 +52,7 @@ imURLRef.on('value', function(snapshot) {
       console.log(`---------`);
 
       const face = results[0][0];
+      if (!face) return;
       console.log(`Emotions: (confidence ${face.confidence})`);
       console.log(`    Joy: ${face.joy}`);
       console.log(`    Anger: ${face.anger}`);

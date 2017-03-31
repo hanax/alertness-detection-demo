@@ -9,7 +9,7 @@ const config = {
 
 firebase.initializeApp(config);
 
-var curSpeed = 65;
+var curSpeed = 60;
 var curAcc = 0;
 
 $(() => {
@@ -24,14 +24,14 @@ $(() => {
     curSpeed += curAcc;
     if (curAcc === 2) {
       // recover mode
-      curSpeed = Math.min(65, Math.max(0, curSpeed));
+      curSpeed = Math.min(60, Math.max(0, curSpeed));
     } else if (curAcc === 1) {
       // zct speed up mode
-      curSpeed = Math.min(80, Math.max(0, curSpeed));
+      curSpeed = Math.min(70, Math.max(0, curSpeed));
     }
 
     $('#speed').text(curSpeed);
-  }, 800);
+  }, 1000);
 
   firebase.database().ref('sl/').on('value', (snapshot) => {
     const { shouldSlowDown, shouldSpeedUpZCT } = snapshot.val();
@@ -44,7 +44,7 @@ $(() => {
     if (shouldSlowDown) {
       curAcc = -2;
     } else {
-      if (curSpeed < 65) {
+      if (curSpeed < 60) {
         curAcc = 2;
       } else {
         curAcc = 0;

@@ -68,7 +68,7 @@ $(() => {
       if (alertCntdown === 0) {
         alertCntdown = Date.now();
         document.getElementById('alarm-sound').play();
-      } else if (Date.now() - alertCntdown > 10000) {
+      } else if (Date.now() - alertCntdown > 8000) {
         // more than 10 sec
         firebase.database().ref('sl/').update({ shouldSlowDown: true });
       }
