@@ -17,7 +17,7 @@ server.on('error', (err) => {
 });
 
 server.on('message', (msg, rinfo) => {
-  var curBeat = msg.toString();
+  let curBeat = msg.toString();
   if (curBeat == 0) return;
 
   // console.log(`server got: ${curBeat} from ${rinfo.address}:${rinfo.port}`);
@@ -25,7 +25,7 @@ server.on('message', (msg, rinfo) => {
 });
 
 server.on('listening', () => {
-  var address = server.address();
+  let address = server.address();
   console.log(`server listening ${address.address}:${address.port}`);
 });
 

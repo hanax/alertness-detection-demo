@@ -17,13 +17,15 @@ $(() => {
   $('#em-happy').hide();
   $('#em-sad').hide();
 
+  let emOver = false;
+
   firebase.database().ref('em/').on('value', (snapshot) => {
     const face = snapshot.val().face;
 
     $('#emotion .dash-number').text(parseInt(face.confidence*100)/100);
     firebase.database().ref('ad/').once('value').then((snapshot) => {
       const audioEm = snapshot.val().audioEmotion;
-      if (face.joy || audioEm === 'happy') {
+      if (face.joy || audioEm === 'happy' || emOver) {
         $('#em-happy').show();
         $('#em-sad').hide();
         $('#em-neutural').hide();
@@ -90,6 +92,7 @@ $(() => {
     if (e.which === 65) {
       firebase.database().ref('sl/').update({ shouldSpeedUpZCT: true });
       document.getElementById('alarm-zct').play();
+      emOver = true;
     }
   });
 });
