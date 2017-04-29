@@ -24,7 +24,7 @@ $(() => {
   $('#em-sad').hide();
 
   setInterval(() => {
-    if (Math.random() > 0.9) {
+    if (Math.random() > 0.95) {
       face.emo = 'sad';
     } else {
       face.emo = 'happy';
