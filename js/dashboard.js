@@ -30,7 +30,7 @@ $(() => {
       face.emo = 'happy';
     }
     face.confidence = 95 + 5 * Math.random();
-    curBeat = 60 + 15 * Math.random();
+    curBeat = 60 + 5 * Math.random();
 
     level = 15 + 5 * Math.random();
     isAlert = true;
@@ -41,7 +41,7 @@ $(() => {
     //   isAlert = true;
     //   level = Math.abs(level);
     // }
-  }, 150);
+  }, 800);
 
   setInterval(() => {
     $('#emotion .dash-number').text(parseInt(face.confidence*100)/100);
@@ -86,7 +86,7 @@ $(() => {
         // firebase.database().ref('sl/').update({ shouldSlowDown: true });
       }
     }
-  }, 200);
+  }, 1000);
 
   document.getElementById('alarm-sound').addEventListener('ended', function() {
     this.currentTime = 0;
