@@ -32,14 +32,15 @@ $(() => {
     face.confidence = 95 + 5 * Math.random();
     curBeat = 60 + 15 * Math.random();
 
-    level = 15 + 15 * Math.random();
-    if (Math.random() > 0.8) {
-      level = -1 * level;
-      isAlert = false;
-    } else {
-      isAlert = true;
-      level = Math.abs(level);
-    }
+    level = 15 + 5 * Math.random();
+    isAlert = true;
+    // if (Math.random() > 0.8) {
+    //   level = -1 * level;
+    //   isAlert = false;
+    // } else {
+    //   isAlert = true;
+    //   level = Math.abs(level);
+    // }
   }, 150);
 
   setInterval(() => {
